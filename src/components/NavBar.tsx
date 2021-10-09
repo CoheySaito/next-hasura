@@ -59,7 +59,7 @@ export default function NavBar() {
             fontFamily={'heading'}
             color={useColorModeValue('gray.800', 'white')}
           >
-            Logo
+            Logo Updated second
           </Text>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
