@@ -15,7 +15,9 @@ const Layout: React.FC<LayoutProps> = ({
 }) => {
   return (
     <>
-      <Head>{title}</Head>
+      <Head>
+        <title>{title}</title>
+      </Head>
       <NavBar />
       <Center minH="76vh" flexWrap="wrap" alignContent="center">
         {children}

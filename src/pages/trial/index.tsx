@@ -70,7 +70,7 @@ const Trial: NextPage = () => {
   };
 
   if (error) {
-    return <p>Error:{error}</p>;
+    return <p>Error:{error.message}</p>;
   }
 
   if (loading) {

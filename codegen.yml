@@ -1,5 +1,8 @@
 overwrite: true
-schema: "https://next-hasura-now.hasura.app/v1/graphql"
+schema:
+  - ${NEXT_PUBLIC_HASURA_URL}:
+          headers:
+            x-hasura-admin-secret: ${NEXT_PUBLIC_HASURA_KEY}
 documents: "./src/**/*.graphql"
 generates:
   ./src/generated/graphql.tsx:
@@ -15,5 +18,7 @@ generates:
       scalars:
         timestamptz: string
         uuid: string
+        bigint: number
+        _text: string[]
 
 

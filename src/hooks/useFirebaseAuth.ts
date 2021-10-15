@@ -45,7 +45,6 @@ export const useFirebaseAuth = () => {
           alert(error.message);
         }
         resetInput();
-        router.push('/');
       }
     },
     [email, password, isLogin],
