@@ -53,139 +53,141 @@ const Auth: React.VFC = () => {
       py="12"
       px={{ base: '4', lg: '8' }}
     >
-      <Box maxW="md" mx="auto">
-        <Heading textAlign="center" size="xl" fontWeight="extrabold">
-          Sign in to your account
-        </Heading>
-        <HStack
-          mt="4"
-          mb="8"
-          align="center"
-          maxW="md"
-          fontWeight="medium"
-          justifyContent="center"
-          onClick={toggleMode}
-          cursor="pointer"
-        >
-          <Text
-            as="span"
-            color="blue.500"
-            transition="all .4s ease-out"
-            _hover={{
-              color: 'blue.400',
-            }}
-          >
-            {isLogin ? 'Create new account' : 'Sign In'}
-          </Text>
-          <Text color="rgb(43, 108, 176)">
-            {isLogin ? (
-              <AiOutlineUserAdd size={24} />
-            ) : (
-              <AiOutlineLogin size={24} />
-            )}
-          </Text>
-        </HStack>
-        <Box
-          bg={useColorModeValue('white', 'gray.700')}
-          py="8"
-          px={{ base: '4', md: '10' }}
-          shadow="base"
-          rounded={{ sm: 'lg' }}
-        >
-          <chakra.form onSubmit={authUser}>
-            <Stack spacing="6">
-              <FormControl id="email">
-                <FormLabel>Email address</FormLabel>
-                <Input
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  value={email}
-                  onChange={emailChange}
-                />
-              </FormControl>
-              <FormControl id="password">
-                <FormLabel>password</FormLabel>
-                <Input
-                  name="password"
-                  type="password"
-                  autoComplete="password"
-                  required
-                  value={password}
-                  onChange={pwChange}
-                />
-              </FormControl>
-              <Button
-                type="submit"
-                colorScheme={isLogin ? 'blue' : 'pink'}
-                size="lg"
-                fontSize="md"
-                transition="all .4s ease-out"
+      {currentUser ? (
+        <>
+          <DividerWithText mt="6">
+            <Text as="span" fontWeight="bold">
+              Login User:
+            </Text>
+            {currentUser.email}
+          </DividerWithText>
+          <Link as={NextLink} href="/tasks">
+            <HStack
+              justifyContent="center"
+              alignItems="center"
+              mt={{ base: '2', md: '4' }}
+            >
+              <Text
+                fontSize="xl"
+                cursor="pointer"
+                textAlign="center"
+                color={'blue.500'}
+                _hover={{
+                  textDecoration: 'none',
+                  color: 'blue.400',
+                }}
               >
-                {isLogin ? 'Sign in' : 'Register'}
-              </Button>
-            </Stack>
-          </chakra.form>
-          {currentUser && (
-            <>
-              <DividerWithText mt="6">
-                <Text as="span" fontWeight="bold">
-                  Login User:
-                </Text>
-                {currentUser.email}
-              </DividerWithText>
-              <Link as={NextLink} href="/trial">
-                <HStack
-                  justifyContent="center"
-                  alignItems="center"
-                  mt={{ base: '2', md: '4' }}
-                >
-                  <Text
-                    fontSize="xl"
-                    cursor="pointer"
-                    textAlign="center"
-                    color={'blue.500'}
-                    _hover={{
-                      textDecoration: 'none',
-                      color: 'blue.400',
-                    }}
-                  >
-                    to task page
-                  </Text>
-                  <Text
-                    fontSize="xl"
-                    cursor="pointer"
-                    textAlign="center"
-                    color={'blue.500'}
-                    _hover={{
-                      textDecoration: 'none',
-                      color: 'blue.400',
-                    }}
-                  >
-                    <BiLinkExternal />
-                  </Text>
-                </HStack>
-              </Link>
-              <Center>
+                to Tasks page
+              </Text>
+              <Text
+                fontSize="xl"
+                cursor="pointer"
+                textAlign="center"
+                color={'blue.500'}
+                _hover={{
+                  textDecoration: 'none',
+                  color: 'blue.400',
+                }}
+              >
+                <BiLinkExternal />
+              </Text>
+            </HStack>
+          </Link>
+          <Center>
+            <Button
+              colorScheme="teal"
+              size="md"
+              fontWeight="extrabold"
+              py={{ md: '4' }}
+              px="6"
+              mt="4"
+              variant="outline"
+              borderWidth="2px"
+              onClick={logoutHandler}
+            >
+              Logout
+            </Button>
+          </Center>
+        </>
+      ) : (
+        <Box maxW="md" mx="auto">
+          <Heading textAlign="center" size="xl" fontWeight="extrabold">
+            Sign in to your account
+          </Heading>
+          <HStack
+            mt="4"
+            mb="8"
+            align="center"
+            maxW="md"
+            fontWeight="medium"
+            justifyContent="center"
+            onClick={toggleMode}
+            cursor="pointer"
+          >
+            <Text
+              as="span"
+              color="blue.500"
+              transition="all .4s ease-out"
+              _hover={{
+                color: 'blue.400',
+              }}
+            >
+              {isLogin ? 'Create new account' : 'Sign In'}
+            </Text>
+            <Text color="rgb(43, 108, 176)">
+              {isLogin ? (
+                <AiOutlineUserAdd size={24} />
+              ) : (
+                <AiOutlineLogin size={24} />
+              )}
+            </Text>
+          </HStack>
+          <Box
+            // eslint-disable-next-line react-hooks/rules-of-hooks
+            bg={useColorModeValue('white', 'gray.700')}
+            py="8"
+            px={{ base: '4', md: '10' }}
+            shadow="base"
+            rounded={{ sm: 'lg' }}
+          >
+            <chakra.form onSubmit={authUser}>
+              <Stack spacing="6">
+                <FormControl id="email">
+                  <FormLabel>Email address</FormLabel>
+                  <Input
+                    name="email"
+                    type="email"
+                    autoComplete="email"
+                    required
+                    value={email}
+                    onChange={emailChange}
+                  />
+                </FormControl>
+                <FormControl id="password">
+                  <FormLabel>password</FormLabel>
+                  <Input
+                    name="password"
+                    type="password"
+                    autoComplete="password"
+                    required
+                    value={password}
+                    onChange={pwChange}
+                  />
+                </FormControl>
                 <Button
-                  colorScheme="teal"
-                  size="md"
-                  fontWeight="extrabold"
-                  py={{ md: '4' }}
-                  px="6"
-                  mt="4"
-                  variant="outline"
-                  borderWidth="2px"
-                  onClick={logoutHandler}
+                  type="submit"
+                  colorScheme={isLogin ? 'blue' : 'pink'}
+                  size="lg"
+                  fontSize="md"
+                  transition="all .4s ease-out"
                 >
-                  Logout
+                  {isLogin ? 'Sign in' : 'Register'}
                 </Button>
-              </Center>
-            </>
-          )}
+              </Stack>
+            </chakra.form>
+          </Box>
         </Box>
-      </Box>
+      )}
     </Box>
   );
 };

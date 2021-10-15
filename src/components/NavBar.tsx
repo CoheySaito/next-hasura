@@ -246,4 +246,12 @@ const NAV_ITEMS: Array<NavItem> = [
     label: 'Trial',
     href: '/trial',
   },
+  {
+    label: 'News',
+    href: '/news',
+  },
+  {
+    label: 'Tasks',
+    href: '/tasks',
+  },
 ];
