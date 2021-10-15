@@ -817,6 +817,40 @@ export type Uuid_Comparison_Exp = {
   _nin?: Maybe<Array<Scalars['uuid']>>;
 };
 
+export type GetNewsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetNewsQuery = { __typename?: 'query_root', news: Array<{ __typename?: 'news', content: string, created_at: string, id: string }> };
+
+export type GetNewsByIdQueryVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type GetNewsByIdQuery = { __typename?: 'query_root', news_by_pk?: { __typename?: 'news', content: string, created_at: string, id: string } | null | undefined };
+
+export type CreateNewsMutationVariables = Exact<{
+  content: Scalars['String'];
+}>;
+
+
+export type CreateNewsMutation = { __typename?: 'mutation_root', insert_news_one?: { __typename?: 'news', content: string, created_at: string, id: string } | null | undefined };
+
+export type UpdateNewsMutationVariables = Exact<{
+  id: Scalars['uuid'];
+  content: Scalars['String'];
+}>;
+
+
+export type UpdateNewsMutation = { __typename?: 'mutation_root', update_news_by_pk?: { __typename?: 'news', content: string, created_at: string, id: string } | null | undefined };
+
+export type DeleteNewsMutationVariables = Exact<{
+  id: Scalars['uuid'];
+}>;
+
+
+export type DeleteNewsMutation = { __typename?: 'mutation_root', delete_news_by_pk?: { __typename?: 'news', content: string, created_at: string, id: string } | null | undefined };
+
 export type GetTasksQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -856,12 +890,12 @@ export type GetUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetUsersQuery = { __typename?: 'query_root', users: Array<{ __typename?: 'users', created_at: string, id: string, name: string }> };
 
-export type GetUserByIdQueryVariables = Exact<{
+export type GetUsersByIdQueryVariables = Exact<{
   id: Scalars['uuid'];
 }>;
 
 
-export type GetUserByIdQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', created_at: string, id: string, name: string } | null | undefined };
+export type GetUsersByIdQuery = { __typename?: 'query_root', users_by_pk?: { __typename?: 'users', created_at: string, id: string, name: string } | null | undefined };
 
 export type CreateUserMutationVariables = Exact<{
   name: Scalars['String'];
@@ -870,6 +904,14 @@ export type CreateUserMutationVariables = Exact<{
 
 export type CreateUserMutation = { __typename?: 'mutation_root', insert_users_one?: { __typename?: 'users', created_at: string, id: string, name: string } | null | undefined };
 
+export type UpdateUserMutationVariables = Exact<{
+  name: Scalars['String'];
+  id: Scalars['uuid'];
+}>;
+
+
+export type UpdateUserMutation = { __typename?: 'mutation_root', update_users_by_pk?: { __typename?: 'users', created_at: string, id: string, name: string } | null | undefined };
+
 export type DeleteUserMutationVariables = Exact<{
   id: Scalars['uuid'];
 }>;
@@ -877,15 +919,186 @@ export type DeleteUserMutationVariables = Exact<{
 
 export type DeleteUserMutation = { __typename?: 'mutation_root', delete_users_by_pk?: { __typename?: 'users', created_at: string, id: string, name: string } | null | undefined };
 
-export type UpdateUserMutationVariables = Exact<{
-  id: Scalars['uuid'];
-  name: Scalars['String'];
-}>;
 
+export const GetNewsDocument = gql`
+    query GetNews {
+  news(order_by: {created_at: desc}) {
+    content
+    created_at
+    id
+  }
+}
+    `;
 
-export type UpdateUserMutation = { __typename?: 'mutation_root', update_users_by_pk?: { __typename?: 'users', created_at: string, id: string, name: string } | null | undefined };
+/**
+ * __useGetNewsQuery__
+ *
+ * To run a query within a React component, call `useGetNewsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNewsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNewsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetNewsQuery(baseOptions?: Apollo.QueryHookOptions<GetNewsQuery, GetNewsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNewsQuery, GetNewsQueryVariables>(GetNewsDocument, options);
+      }
+export function useGetNewsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNewsQuery, GetNewsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNewsQuery, GetNewsQueryVariables>(GetNewsDocument, options);
+        }
+export type GetNewsQueryHookResult = ReturnType<typeof useGetNewsQuery>;
+export type GetNewsLazyQueryHookResult = ReturnType<typeof useGetNewsLazyQuery>;
+export type GetNewsQueryResult = Apollo.QueryResult<GetNewsQuery, GetNewsQueryVariables>;
+export const GetNewsByIdDocument = gql`
+    query GetNewsById($id: uuid!) {
+  news_by_pk(id: $id) {
+    content
+    created_at
+    id
+  }
+}
+    `;
 
+/**
+ * __useGetNewsByIdQuery__
+ *
+ * To run a query within a React component, call `useGetNewsByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetNewsByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetNewsByIdQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGetNewsByIdQuery(baseOptions: Apollo.QueryHookOptions<GetNewsByIdQuery, GetNewsByIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetNewsByIdQuery, GetNewsByIdQueryVariables>(GetNewsByIdDocument, options);
+      }
+export function useGetNewsByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetNewsByIdQuery, GetNewsByIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetNewsByIdQuery, GetNewsByIdQueryVariables>(GetNewsByIdDocument, options);
+        }
+export type GetNewsByIdQueryHookResult = ReturnType<typeof useGetNewsByIdQuery>;
+export type GetNewsByIdLazyQueryHookResult = ReturnType<typeof useGetNewsByIdLazyQuery>;
+export type GetNewsByIdQueryResult = Apollo.QueryResult<GetNewsByIdQuery, GetNewsByIdQueryVariables>;
+export const CreateNewsDocument = gql`
+    mutation CreateNews($content: String!) {
+  insert_news_one(object: {content: $content}) {
+    content
+    created_at
+    id
+  }
+}
+    `;
+export type CreateNewsMutationFn = Apollo.MutationFunction<CreateNewsMutation, CreateNewsMutationVariables>;
 
+/**
+ * __useCreateNewsMutation__
+ *
+ * To run a mutation, you first call `useCreateNewsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateNewsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createNewsMutation, { data, loading, error }] = useCreateNewsMutation({
+ *   variables: {
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useCreateNewsMutation(baseOptions?: Apollo.MutationHookOptions<CreateNewsMutation, CreateNewsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<CreateNewsMutation, CreateNewsMutationVariables>(CreateNewsDocument, options);
+      }
+export type CreateNewsMutationHookResult = ReturnType<typeof useCreateNewsMutation>;
+export type CreateNewsMutationResult = Apollo.MutationResult<CreateNewsMutation>;
+export type CreateNewsMutationOptions = Apollo.BaseMutationOptions<CreateNewsMutation, CreateNewsMutationVariables>;
+export const UpdateNewsDocument = gql`
+    mutation UpdateNews($id: uuid!, $content: String!) {
+  update_news_by_pk(pk_columns: {id: $id}, _set: {content: $content}) {
+    content
+    created_at
+    id
+  }
+}
+    `;
+export type UpdateNewsMutationFn = Apollo.MutationFunction<UpdateNewsMutation, UpdateNewsMutationVariables>;
+
+/**
+ * __useUpdateNewsMutation__
+ *
+ * To run a mutation, you first call `useUpdateNewsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateNewsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateNewsMutation, { data, loading, error }] = useUpdateNewsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      content: // value for 'content'
+ *   },
+ * });
+ */
+export function useUpdateNewsMutation(baseOptions?: Apollo.MutationHookOptions<UpdateNewsMutation, UpdateNewsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateNewsMutation, UpdateNewsMutationVariables>(UpdateNewsDocument, options);
+      }
+export type UpdateNewsMutationHookResult = ReturnType<typeof useUpdateNewsMutation>;
+export type UpdateNewsMutationResult = Apollo.MutationResult<UpdateNewsMutation>;
+export type UpdateNewsMutationOptions = Apollo.BaseMutationOptions<UpdateNewsMutation, UpdateNewsMutationVariables>;
+export const DeleteNewsDocument = gql`
+    mutation DeleteNews($id: uuid!) {
+  delete_news_by_pk(id: $id) {
+    content
+    created_at
+    id
+  }
+}
+    `;
+export type DeleteNewsMutationFn = Apollo.MutationFunction<DeleteNewsMutation, DeleteNewsMutationVariables>;
+
+/**
+ * __useDeleteNewsMutation__
+ *
+ * To run a mutation, you first call `useDeleteNewsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useDeleteNewsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [deleteNewsMutation, { data, loading, error }] = useDeleteNewsMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useDeleteNewsMutation(baseOptions?: Apollo.MutationHookOptions<DeleteNewsMutation, DeleteNewsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<DeleteNewsMutation, DeleteNewsMutationVariables>(DeleteNewsDocument, options);
+      }
+export type DeleteNewsMutationHookResult = ReturnType<typeof useDeleteNewsMutation>;
+export type DeleteNewsMutationResult = Apollo.MutationResult<DeleteNewsMutation>;
+export type DeleteNewsMutationOptions = Apollo.BaseMutationOptions<DeleteNewsMutation, DeleteNewsMutationVariables>;
 export const GetTasksDocument = gql`
     query GetTasks {
   tasks(order_by: {created_at: desc}) {
@@ -1106,8 +1319,8 @@ export function useGetUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<G
 export type GetUsersQueryHookResult = ReturnType<typeof useGetUsersQuery>;
 export type GetUsersLazyQueryHookResult = ReturnType<typeof useGetUsersLazyQuery>;
 export type GetUsersQueryResult = Apollo.QueryResult<GetUsersQuery, GetUsersQueryVariables>;
-export const GetUserByIdDocument = gql`
-    query GetUserById($id: uuid!) {
+export const GetUsersByIdDocument = gql`
+    query GetUsersById($id: uuid!) {
   users_by_pk(id: $id) {
     created_at
     id
@@ -1117,32 +1330,32 @@ export const GetUserByIdDocument = gql`
     `;
 
 /**
- * __useGetUserByIdQuery__
+ * __useGetUsersByIdQuery__
  *
- * To run a query within a React component, call `useGetUserByIdQuery` and pass it any options that fit your needs.
- * When your component renders, `useGetUserByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useGetUsersByIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUsersByIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useGetUserByIdQuery({
+ * const { data, loading, error } = useGetUsersByIdQuery({
  *   variables: {
  *      id: // value for 'id'
  *   },
  * });
  */
-export function useGetUserByIdQuery(baseOptions: Apollo.QueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
+export function useGetUsersByIdQuery(baseOptions: Apollo.QueryHookOptions<GetUsersByIdQuery, GetUsersByIdQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
+        return Apollo.useQuery<GetUsersByIdQuery, GetUsersByIdQueryVariables>(GetUsersByIdDocument, options);
       }
-export function useGetUserByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserByIdQuery, GetUserByIdQueryVariables>) {
+export function useGetUsersByIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUsersByIdQuery, GetUsersByIdQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<GetUserByIdQuery, GetUserByIdQueryVariables>(GetUserByIdDocument, options);
+          return Apollo.useLazyQuery<GetUsersByIdQuery, GetUsersByIdQueryVariables>(GetUsersByIdDocument, options);
         }
-export type GetUserByIdQueryHookResult = ReturnType<typeof useGetUserByIdQuery>;
-export type GetUserByIdLazyQueryHookResult = ReturnType<typeof useGetUserByIdLazyQuery>;
-export type GetUserByIdQueryResult = Apollo.QueryResult<GetUserByIdQuery, GetUserByIdQueryVariables>;
+export type GetUsersByIdQueryHookResult = ReturnType<typeof useGetUsersByIdQuery>;
+export type GetUsersByIdLazyQueryHookResult = ReturnType<typeof useGetUsersByIdLazyQuery>;
+export type GetUsersByIdQueryResult = Apollo.QueryResult<GetUsersByIdQuery, GetUsersByIdQueryVariables>;
 export const CreateUserDocument = gql`
     mutation CreateUser($name: String!) {
   insert_users_one(object: {name: $name}) {
@@ -1178,6 +1391,42 @@ export function useCreateUserMutation(baseOptions?: Apollo.MutationHookOptions<C
 export type CreateUserMutationHookResult = ReturnType<typeof useCreateUserMutation>;
 export type CreateUserMutationResult = Apollo.MutationResult<CreateUserMutation>;
 export type CreateUserMutationOptions = Apollo.BaseMutationOptions<CreateUserMutation, CreateUserMutationVariables>;
+export const UpdateUserDocument = gql`
+    mutation UpdateUser($name: String!, $id: uuid!) {
+  update_users_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {
+    created_at
+    id
+    name
+  }
+}
+    `;
+export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
+
+/**
+ * __useUpdateUserMutation__
+ *
+ * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
+ *   variables: {
+ *      name: // value for 'name'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
+      }
+export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
+export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
+export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
 export const DeleteUserDocument = gql`
     mutation DeleteUser($id: uuid!) {
   delete_users_by_pk(id: $id) {
@@ -1213,39 +1462,3 @@ export function useDeleteUserMutation(baseOptions?: Apollo.MutationHookOptions<D
 export type DeleteUserMutationHookResult = ReturnType<typeof useDeleteUserMutation>;
 export type DeleteUserMutationResult = Apollo.MutationResult<DeleteUserMutation>;
 export type DeleteUserMutationOptions = Apollo.BaseMutationOptions<DeleteUserMutation, DeleteUserMutationVariables>;
-export const UpdateUserDocument = gql`
-    mutation UpdateUser($id: uuid!, $name: String!) {
-  update_users_by_pk(pk_columns: {id: $id}, _set: {name: $name}) {
-    created_at
-    id
-    name
-  }
-}
-    `;
-export type UpdateUserMutationFn = Apollo.MutationFunction<UpdateUserMutation, UpdateUserMutationVariables>;
-
-/**
- * __useUpdateUserMutation__
- *
- * To run a mutation, you first call `useUpdateUserMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useUpdateUserMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [updateUserMutation, { data, loading, error }] = useUpdateUserMutation({
- *   variables: {
- *      id: // value for 'id'
- *      name: // value for 'name'
- *   },
- * });
- */
-export function useUpdateUserMutation(baseOptions?: Apollo.MutationHookOptions<UpdateUserMutation, UpdateUserMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useMutation<UpdateUserMutation, UpdateUserMutationVariables>(UpdateUserDocument, options);
-      }
-export type UpdateUserMutationHookResult = ReturnType<typeof useUpdateUserMutation>;
-export type UpdateUserMutationResult = Apollo.MutationResult<UpdateUserMutation>;
-export type UpdateUserMutationOptions = Apollo.BaseMutationOptions<UpdateUserMutation, UpdateUserMutationVariables>;
