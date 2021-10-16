@@ -29,11 +29,11 @@ import { formatDate } from '../../util/date';
 import useCrudNews from '../../hooks/useCrudNews';
 import firebase from '../../../firebaseConfig';
 import { useRouter } from 'next/router';
-import { route } from 'next/dist/server/router';
 
 const News: NextPage = () => {
   const currentUser = firebase.auth().currentUser;
   const router = useRouter();
+  const isReady = router.isReady;
 
   const header = ['news', 'created', 'actions'] as const;
 
@@ -86,19 +86,7 @@ const News: NextPage = () => {
     setEditNews({ id: '', content: '' });
   };
 
-  if (!currentUser) {
-    router.push('/');
-  }
-
-  if (newsError) {
-    return (
-      <Layout title="News">
-        <p>Error:{newsError.message}</p>{' '}
-      </Layout>
-    );
-  }
-
-  if (newsLoading) {
+  if (newsLoading || !isReady) {
     return (
       <Layout title="News">
         <Center>
@@ -110,6 +98,18 @@ const News: NextPage = () => {
             size="xl"
           />
         </Center>
+      </Layout>
+    );
+  }
+
+  if (!currentUser) {
+    router.push('/');
+  }
+
+  if (newsError) {
+    return (
+      <Layout title="News">
+        <p>Error:{newsError.message}</p>{' '}
       </Layout>
     );
   }

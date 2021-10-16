@@ -34,6 +34,7 @@ const Tasks: NextPage = () => {
   const currentUser = firebase.auth().currentUser;
 
   const router = useRouter();
+  const isReady = router.isReady;
 
   const header = ['tasks', 'created', 'actions'] as const;
 
@@ -86,19 +87,7 @@ const Tasks: NextPage = () => {
     setEditTask({ id: '', title: '' });
   };
 
-  if (!currentUser) {
-    router.push('/');
-  }
-
-  if (tasksError) {
-    return (
-      <Layout title="Tasks">
-        <p>Error:{tasksError.message}</p>{' '}
-      </Layout>
-    );
-  }
-
-  if (tasksLoading) {
+  if (tasksLoading || !isReady) {
     return (
       <Layout title="Tasks">
         <Center>
@@ -113,6 +102,19 @@ const Tasks: NextPage = () => {
       </Layout>
     );
   }
+
+  if (!currentUser) {
+    router.push('/');
+  }
+
+  if (tasksError) {
+    return (
+      <Layout title="Tasks">
+        <p>Error:{tasksError.message}</p>{' '}
+      </Layout>
+    );
+  }
+
   return (
     <Layout title="Tasks">
       <Flex
